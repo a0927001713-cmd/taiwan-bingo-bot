@@ -1,26 +1,28 @@
 import urllib.request
-import urllib.error
+import re
 
 url = "https://apislb.taiwanlottery.com/lotto/result/bingo_bingo/?searchData=true"
 
-request = urllib.request.Request(
+req = urllib.request.Request(
     url,
-    headers={
-        "User-Agent": "Mozilla/5.0",
-        "Accept": "application/json,text/html,*/*"
-    }
+    headers={"User-Agent": "Mozilla/5.0"}
 )
 
-try:
-    with urllib.request.urlopen(request, timeout=20) as response:
-        content = response.read().decode("utf-8", errors="replace")
-        print("HTTP 狀態:", response.status)
-        print("資料類型:", response.headers.get("Content-Type"))
-        print("回傳資料前 1500 字:")
-        print(content[:1500])
-except urllib.error.HTTPError as error:
-    print("HTTP 錯誤:", error.code)
-    print(error.read().decode("utf-8", errors="replace")[:500])
-except Exception as error:
-    print("連線錯誤:", type(error).__name__, str(error))
+with urllib.request.urlopen(req, timeout=30) as response:
+    html = response.read().decode("utf-8", errors="replace")
 
+print("網頁讀取成功")
+print("網頁長度:", len(html))
+
+match = re.search(
+    r'<script[^>]*id="__NUXT_DATA__"[^>]*>(.*?)</script>',
+    html,
+    re.S
+)
+
+if match:
+    print("找到網頁資料區塊")
+    print(match.group(1)[:3000])
+else:
+    print("未找到預載資料區塊")
+    print("需要繼續尋找開獎 API")
