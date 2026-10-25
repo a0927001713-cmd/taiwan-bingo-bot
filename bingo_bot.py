@@ -23,13 +23,15 @@ if not match:
 
 data = json.loads(match.group(1))
 
-print("資料項目總數:", len(data))
+bingo = data[32]
+result_index = bingo["latestBingoResult"]
 
-for i, item in enumerate(data):
-    if isinstance(item, dict):
-        if any("bingo" in str(k).lower() for k in item):
-            print("位置:", i)
-            print("內容:", str(item)[:2000])
+print("最新賓果資料位置:", result_index)
+print("最新賓果資料內容:")
+print(json.dumps(
+    data[result_index],
+    ensure_ascii=False,
+    indent=2
+))
 
-print("資料檢查完成")
-
+print("檢查完成")
