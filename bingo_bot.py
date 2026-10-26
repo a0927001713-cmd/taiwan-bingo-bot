@@ -9,7 +9,7 @@ today = datetime.now(
     ZoneInfo("Asia/Taipei")
 ).strftime("%Y-%m-%d")
 
-base = "https://apislb.taiwanlottery.com"
+base = base = "https://api.taiwanlottery.com/TLCAPIWeB"
 
 params = urllib.parse.urlencode({
     "openDate": today,
