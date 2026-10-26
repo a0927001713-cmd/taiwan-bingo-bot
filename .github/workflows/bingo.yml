@@ -4,7 +4,7 @@ name: Taiwan Bingo Bot
 on:
   workflow_dispatch:
   schedule:
-    - cron: '*/5 * * * *'
+    - cron: '2-59/5 * * * *'
 jobs:
   send-test:
     runs-on: ubuntu-latest
