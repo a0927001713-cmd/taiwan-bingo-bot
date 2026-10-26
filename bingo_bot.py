@@ -80,6 +80,7 @@ def main():
     latest = records[0]
 
     period = str(latest.get("drawTerm", "")).strip()
+    print("最新一期完整欄位：", json.dumps(latest, ensure_ascii=False))
     draw_time = str(latest.get("drawDate", "")).strip()
     numbers = parse_numbers(latest.get("bigShowOrder"))
 
