@@ -1,56 +1,105 @@
+import os
+import json
 import urllib.request
 import urllib.parse
-import urllib.error
-import json
 from datetime import datetime
 from zoneinfo import ZoneInfo
 
-today = datetime.now(
-    ZoneInfo("Asia/Taipei")
-).strftime("%Y-%m-%d")
+API = "https://api.taiwanlottery.com/TLCAPIWeB/Lottery/BingoResult"
+TZ = ZoneInfo("Asia/Taipei")
 
-base = base = "https://api.taiwanlottery.com/TLCAPIWeB"
+def get_results():
+    today = datetime.now(TZ).strftime("%Y-%m-%d")
+    query = urllib.parse.urlencode({
+        "openDate": today,
+        "pageNum": 1,
+        "pageSize": 10
+    })
+    req = urllib.request.Request(
+        API + "?" + query,
+        headers={
+            "User-Agent": "Mozilla/5.0",
+            "Accept": "application/json"
+        }
+    )
+    with urllib.request.urlopen(req, timeout=30) as response:
+        data = json.load(response)
 
-params = urllib.parse.urlencode({
-    "openDate": today,
-    "pageNum": 1,
-    "pageSize": 10
-})
+    if not isinstance(data, dict):
+        raise ValueError("API 格式不正確")
 
-url = base + "/Lottery/BingoResult?" + params
+    records = data.get("bingoQueryResult")
+    if not isinstance(records, list) or not records:
+        raise ValueError("找不到開獎資料")
 
-print("查詢日期:", today)
-print("測試官方開獎資料")
+    return records
 
-req = urllib.request.Request(
-    url,
-    headers={
-        "User-Agent": "Mozilla/5.0",
-        "Accept": "application/json"
-    }
-)
+def parse_numbers(value):
+    if isinstance(value, str):
+        import re
+        numbers = [
+            int(x) for x in re.findall(r"\d+", value)
+        ]
+    elif isinstance(value, list):
+        numbers = [int(x) for x in value]
+    else:
+        raise ValueError("號碼格式不正確")
 
-try:
-    with urllib.request.urlopen(req, timeout=30) as r:
-        body = r.read().decode(
-            "utf-8", errors="replace"
+    if (len(numbers) != 20
+            or len(set(numbers)) != 20
+            or not all(1 <= n <= 80 for n in numbers)):
+        raise ValueError("開獎號碼未通過驗證")
+
+    return sorted(numbers)
+
+def send_message(message):
+    token = os.environ["TELEGRAM_BOT_TOKEN"]
+    chat_id = os.environ["TELEGRAM_CHAT_ID"]
+
+    url = f"https://api.telegram.org/bot{token}/sendMessage"
+    payload = urllib.parse.urlencode({
+        "chat_id": chat_id,
+        "text": message
+    }).encode()
+
+    request = urllib.request.Request(
+        url, data=payload, method="POST"
+    )
+    with urllib.request.urlopen(request, timeout=30) as response:
+        result = json.load(response)
+
+    if not result.get("ok"):
+        raise RuntimeError("Telegram 發送失敗")
+
+def main():
+    records = get_results()
+    latest = records[0]
+
+    period = str(latest.get("drawTerm", "")).strip()
+    draw_time = str(latest.get("drawDate", "")).strip()
+    numbers = parse_numbers(latest.get("bigShowOrder"))
+
+    if not period or not draw_time:
+        raise ValueError("缺少期數或開獎時間")
+
+    lines = [
+        "🎱 台灣賓果 BINGO BINGO",
+        f"🎯 開獎期數：{period}",
+        f"⏰ 開獎時間：{draw_time}",
+        "",
+        "📢 本期開獎號碼"
+    ]
+
+    for i in range(0, 20, 5):
+        lines.append(
+            " ".join(f"{n:02d}" for n in numbers[i:i+5])
         )
-        print("HTTP 狀態:", r.status)
-        print("資料類型:", r.headers.get("Content-Type"))
-        print("回傳內容:")
-        print(body[:4000])
 
-        try:
-            data = json.loads(body)
-            print("JSON 解析成功")
-        except json.JSONDecodeError:
-            print("回傳內容不是 JSON")
+    message = "\n".join(lines)
 
-except urllib.error.HTTPError as e:
-    print("HTTP 錯誤:", e.code)
-    print(e.read().decode(
-        "utf-8", errors="replace"
-    )[:1000])
+    # 安全測試：先只顯示，不發送
+    print(message)
+    print("測試模式：尚未發送 Telegram")
 
-except Exception as e:
-    print("連線錯誤:", str(e))
+if __name__ == "__main__":
+    main()
