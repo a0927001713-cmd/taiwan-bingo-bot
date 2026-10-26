@@ -27,10 +27,14 @@ def get_results():
 
     if not isinstance(data, dict):
         raise ValueError("API 格式不正確")
+print("API 最外層欄位：", list(data.keys()))
+print("API 資料預覽：")
+print(json.dumps(data, ensure_ascii=False)[:2500])
 
-    records = data.get("bingoQueryResult")
-    if not isinstance(records, list) or not records:
-        raise ValueError("找不到開獎資料")
+records = data.get("bingoQueryResult")
+
+if not isinstance(records, list) or not records:
+    raise ValueError("找不到開獎資料，請查看上方預覽")
 
     return records
 
