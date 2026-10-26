@@ -111,9 +111,12 @@ def main():
 
     message = "\n".join(lines)
 
-    # 安全測試：先只顯示，不發送
-    print(message)
-    print("測試模式：尚未發送 Telegram")
+    send_message(message)
+
+    with open("last_sent.json", "w", encoding="utf-8") as f:
+        json.dump({"last_period": period}, f, ensure_ascii=False)
+
+    print("Telegram 發送成功，已記錄期數：", period)
 
 if __name__ == "__main__":
     main()
