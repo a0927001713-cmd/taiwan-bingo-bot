@@ -31,7 +31,7 @@ def get_results():
     print("API 資料預覽：")
     print(json.dumps(data, ensure_ascii=False)[:2500])
 
-    records = data.get("bingoQueryResult")
+    records = data.get("content", {}).get("bingoQueryResult")
 
     if not isinstance(records, list) or not records:
         raise ValueError("找不到開獎資料，請查看上方預覽")
