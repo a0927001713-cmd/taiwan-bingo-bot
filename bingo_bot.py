@@ -84,13 +84,13 @@ def main():
     draw_time = str(latest.get("drawDate", "")).strip()
     numbers = parse_numbers(latest.get("bigShowOrder"))
 
-    if not period or not draw_time:
-        raise ValueError("缺少期數或開獎時間")
+    if not period:
+        raise ValueError("缺少開獎期數")
 
     lines = [
         "🎱 台灣賓果 BINGO BINGO",
         f"🎯 開獎期數：{period}",
-        f"⏰ 開獎時間：{draw_time}",
+        "⏰ 開獎時間：待確認",
         "",
         "📢 本期開獎號碼"
     ]
