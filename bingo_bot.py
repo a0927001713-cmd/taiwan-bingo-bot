@@ -1,5 +1,4 @@
 import urllib.request
-import re
 
 url = "https://apislb.taiwanlottery.com/_nuxt/bingo_bingo.1_0_8_7.js"
 
@@ -8,28 +7,32 @@ req = urllib.request.Request(
     headers={"User-Agent": "Mozilla/5.0"}
 )
 
-with urllib.request.urlopen(req, timeout=30) as r:
-    js = r.read().decode("utf-8", errors="replace")
+with urllib.request.urlopen(req, timeout=30) as response:
+    js = response.read().decode("utf-8", errors="replace")
 
-print("程式檔讀取成功:", len(js))
-
-# 找出可能的資料路徑
-patterns = [
-    r'["\']([^"\']{1,200}(?:bingo|Bingo|lotto|Lotto|result|Result)[^"\']{0,200})["\']',
-    r'["\']([^"\']{1,200}/api/[^"\']{1,200})["\']'
+keywords = [
+    "/Lottery/BingoResult",
+    "openDate",
+    "dataPerPage"
 ]
 
-found = set()
+for word in keywords:
+    print("\n===== 搜尋:", word, "=====")
 
-for pattern in patterns:
-    for match in re.findall(pattern, js):
-        found.add(match)
+    start = 0
+    count = 0
 
-print("找到相關字串:", len(found))
+    while count < 3:
+        pos = js.find(word, start)
 
-for item in sorted(found):
-    print("線索:", item[:300])
+        if pos == -1:
+            break
 
-print("搜尋完成")
+        print("位置:", pos)
+        print(js[max(0, pos-600):pos+600])
+        print("----------------")
 
+        start = pos + len(word)
+        count += 1
 
+print("檢查完成")
