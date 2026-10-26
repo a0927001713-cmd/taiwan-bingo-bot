@@ -104,7 +104,7 @@ def main():
 
     # 安全測試：先只顯示，不發送
     print(message)
-    print("測試模式：尚未發送 Telegram")
+    send_message("🧪 賓果機器人測試訊息\n\n" + message)
 
 if __name__ == "__main__":
     main()
