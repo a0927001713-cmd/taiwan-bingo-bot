@@ -86,7 +86,16 @@ def main():
 
     if not period:
         raise ValueError("缺少開獎期數")
+    with open("last_sent.json", "r", encoding="utf-8") as f:
+        saved = json.load(f)
 
+    last_period = str(saved.get("last_period", ""))
+
+    if period == last_period:
+        print("本期已發送，跳過：", period)
+        return
+
+    print("發現尚未發送的新期數：", period)
     lines = [
         "🎱 台灣賓果 BINGO BINGO",
         f"🎯 開獎期數：{period}",
