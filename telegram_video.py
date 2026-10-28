@@ -11,7 +11,7 @@ CHANNELS = [
     os.environ["TELEGRAM_ADS_CHAT_ID"],
 ]
 
-VIDEO_FILE = "telegram_video.mp4"
+VIDEO_FILE = VIDEO_FILE = "VID_20261028191318132.mp4"
 
 MESSAGE = """👑森哥团队👑
 💰招商代理💰
