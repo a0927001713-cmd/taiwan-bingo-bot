@@ -72,7 +72,7 @@ http://888.hdna57.com/reg/CF0HV1
 https://ga9.sk/B51019
 
 💬 Telegram 联系方式
-https://t.me/bingomaster0
+https://t.me/the_shattered_dreams
 
 ━━━━━━━━━━━━━━
 
