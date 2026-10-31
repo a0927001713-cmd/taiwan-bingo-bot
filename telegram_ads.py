@@ -12,8 +12,8 @@ CHANNELS = [
 ]
 
 IMAGES = [
-    "6300EBDF-5640-425C-BA16-FFAFFEE02D0E.jpeg",
-    "32B2BE67-80D9-4825-9899-3B516928B5F5.jpeg",
+    "IMG_2415.jpeg",
+    "IMG_2419.jpeg",
 ]
 
 MESSAGE = """🏆 GA黄金甲｜暖心11月・热血献礼 🏆
