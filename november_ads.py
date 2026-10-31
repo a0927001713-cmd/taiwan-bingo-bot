@@ -52,7 +52,7 @@ TITLE = """🏆 GA黄金甲｜11月新人专属福利
 API = f"https://api.telegram.org/bot{TOKEN}"
 
 def send(chat_id):
-    photo_path = "november_poster.jpg"
+    photo_path = "IMG_2417.jpeg"
 
     if os.path.isfile(photo_path):
         boundary = "TelegramPhotoBoundary"
