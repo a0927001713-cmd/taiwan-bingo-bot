@@ -56,6 +56,12 @@ TITLE = """🏆 GA黄金甲｜11月新人专属福利
 🎯 新人双重福利，免费体验金＋首存送彩金！
 📢 活动详情及申请方式，请联系专属经理。
 ⚠️ 活动彩金及提款条件以官方完整规则为准，请留意流水要求。
+https://9zax.ga2ghf.news/B51019
+https://7ydkf.ga2ghf.news/B51019
+https://iz2k.ga2l8l.news/B51019
+https://lntd.ga27951.news/B51019
+https://g9th.ga28577.news/B51019
+https://ga8.sk/B51019
 """
 
 API = f"https://api.telegram.org/bot{TOKEN}"
