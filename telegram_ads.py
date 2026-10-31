@@ -70,7 +70,12 @@ MESSAGE = """🏆 GA黄金甲｜暖心11月・热血献礼 🏆
 http://888.hdna57.com/reg/CF0HV1
 
 ⚽ 体育竞彩入口
-https://ga9.sk/B51019
+https://9zax.ga2ghf.news/B51019
+https://7ydkf.ga2ghf.news/B51019
+https://iz2k.ga2l8l.news/B51019
+https://lntd.ga27951.news/B51019
+https://g9th.ga28577.news/B51019
+https://ga8.sk/B51019
 
 💬 Telegram 联系方式
 https://t.me/the_shattered_dreams
