@@ -11,7 +11,7 @@ CHANNELS = list(dict.fromkeys([
     os.environ["TELEGRAM_ADS_CHAT_ID"],
 ]))
 
-VIDEO_FILE = "telegram_video.mp4"
+VIDEO_FILE = VIDEO_FILE = "telegram_video.mov"
 
 MESSAGE = """👑森哥团队👑
 💰招商代理💰
