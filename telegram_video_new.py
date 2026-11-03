@@ -14,7 +14,7 @@ CHANNELS = list(dict.fromkeys([
 VIDEO_FILE = VIDEO_FILE = "telegram_video.mov"
 
 MESSAGE = """👑森哥团队👑
-💰招商代理💰
+💰平台福利拿不完💰
 🏆888.hdna57.com/reg/CF0HV1🏆
 """
 
