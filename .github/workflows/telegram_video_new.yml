@@ -1,1 +1,30 @@
 
+name: Telegram New Video
+
+on:
+  workflow_dispatch:
+  schedule:
+    # 台灣／北京時間
+    # 08:00 12:00 16:00 19:00 23:00
+    - cron: '0 0,4,8,11,15 * * *'
+
+jobs:
+  send-new-video:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Send new Telegram video
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          TELEGRAM_ADS_CHAT_ID: ${{ secrets.TELEGRAM_ADS_CHAT_ID }}
+        run: python telegram_video_new.py
+
